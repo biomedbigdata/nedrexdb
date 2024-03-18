@@ -41,8 +41,8 @@ def download_biogrid():
     )
 
     zip_fname = url.rsplit("/", 1)[1]
-    target_fname = _Path("homo_sapiens.tab3")
-    biogrid_dir = _Path("/nfs/data3/nedrex_data/downloads/biogrid")
+    target_fname = _config.get("sources.biogrid.human_data.filename")
+    biogrid_dir = _Path(_config.get("db.root_directory")) / _config.get("sources.directory") / "biogrid"
 
     biogrid_dir.mkdir(exist_ok=True, parents=True)
 
@@ -72,6 +72,3 @@ def download_biogrid():
     if counter != 1:
         raise _AssumptionError("more than one BioGRID file containing 'Homo_sapiens' was found")
     
-    
-if __name__ == "__main__":
-    download_biogrid()
