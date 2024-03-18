@@ -177,8 +177,7 @@ class COSMICParser:
         for symbol in non_approved_symbols:
             genes = [gene["primaryDomainId"]
                      for gene in Gene.find(MongoInstance.DB, {"symbols": symbol})]
-            assert len(genes) == 1, f"Multiple genes found for the symbol {
-                symbol}"
+            assert len(genes) == 1, f"Multiple genes found for the symbol {symbol}"
             symbol2entrez.update({symbol: genes[0]})
         assert not (non_approved_symbols - symbol2entrez.keys()), \
             f"Not all symbols could be mapped: {
