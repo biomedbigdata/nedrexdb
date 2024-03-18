@@ -32,6 +32,9 @@ from nedrexdb.db.parsers import (
     sider,
     uberon,
     repotrial,
+    cosmic,
+    ncg,
+    intogen
 )
 from nedrexdb.post_integration import trim_uberon, drop_empty_collections
 
@@ -98,6 +101,10 @@ def update(conf, download):
     hpa.parse_hpa()
     iid.parse_ppis()
     intact.parse()
+
+    cosmic.parse_gene_disease_associations()
+    intogen.parse_gene_disease_associations()
+    ncg.parse_gene_disease_associations()
 
     if version == "licensed":
         omim.parse_gene_disease_associations()
