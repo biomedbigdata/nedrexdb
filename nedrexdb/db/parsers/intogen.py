@@ -25,8 +25,7 @@ def biomart_symbol_transcript_to_entrez(symbol_list: list[str], filter_by: str =
     ET.SubElement(dataset, "Attribute", name=filter_by)
     ET.SubElement(dataset, "Attribute", name="entrezgene_id")
     tree = ET.ElementTree(query)
-    xml_string = f'<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE Query>{
-        ET.tostring(tree.getroot(), encoding="unicode")}'
+    xml_string = f'<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE Query>{ET.tostring(tree.getroot(), encoding="unicode")}'
 
     symbol2entrez: dict[str, str] = dict()
     for i in range(0, len(symbol_list), batch_size):
