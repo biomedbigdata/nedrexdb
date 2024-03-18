@@ -42,7 +42,7 @@ def download_biogrid():
 
     zip_fname = url.rsplit("/", 1)[1]
     target_fname = _config.get("sources.biogrid.human_data.filename")
-    biogrid_dir = _Path(_config.get("db.root_directory")) / _config.get("sources.directory") / "biogrid"
+    biogrid_dir = "/nfs/data3/nedrex_data/downloads/biogrid"
 
     biogrid_dir.mkdir(exist_ok=True, parents=True)
 
