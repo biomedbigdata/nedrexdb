@@ -41,7 +41,7 @@ def download_biogrid():
     )
 
     zip_fname = url.rsplit("/", 1)[1]
-    target_fname = _config.get("sources.biogrid.human_data.filename")
+    target_fname = _Path("homo_sapiens.tab3")
     biogrid_dir = _Path("/nfs/data3/nedrex_data/downloads/biogrid")
 
     biogrid_dir.mkdir(exist_ok=True, parents=True)
