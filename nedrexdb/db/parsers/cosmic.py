@@ -180,8 +180,7 @@ class COSMICParser:
             assert len(genes) == 1, f"Multiple genes found for the symbol {symbol}"
             symbol2entrez.update({symbol: genes[0]})
         assert not (non_approved_symbols - symbol2entrez.keys()), \
-            f"Not all symbols could be mapped: {
-                non_approved_symbols - symbol2entrez.keys()}"
+            f"Not all symbols could be mapped: {non_approved_symbols - symbol2entrez.keys()}"
 
         # id2genomic_variant = {genomic_variant['primaryDomainId']: genomic_variant for genomic_variant in
         #                        GenomicVariant.find(MongoInstance.DB)}
