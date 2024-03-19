@@ -39,6 +39,7 @@ class NCGRow:
         asserted_by = ["ncg"]
         print(ncg2mondo)
         disorders = ncg2mondo[self._row["cancer_type"]]
+        print(disorders)
 
         gawds = [
             GeneAssociatedWithDisorder(
@@ -91,8 +92,8 @@ class NCGParser:
 
 
 def parse_gene_disease_associations():
-    fname = _Path("/nfs/data3/nedrex_data/downloads/ncg/NCG_cancerdrivers_systemslevelproperties.tsv") #get_file_location("annotation")
-    mapping_fname =  _Path("/nfs/data3/nedrex_data/downloads/ncg/ncg2mondo.json") #get_file_location("mapping")
+    fname = get_file_location("annotation")
+    mapping_fname = get_file_location("mapping")
+    print(fname)
+    print(mapping_fname)
     NCGParser(fname, mapping_fname).parse()
-
-parse_gene_disease_associations()
