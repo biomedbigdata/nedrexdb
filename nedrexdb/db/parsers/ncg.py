@@ -37,10 +37,10 @@ class NCGRow:
     def parse(self, ncg2mondo: dict[str, list[str]]) -> list[GeneAssociatedWithDisorder]:
         sourceDomainId = self.get_gene_id()
         asserted_by = ["ncg"]
-        print(ncg2mondo)
+        if self._row["cancer_type"] == None:
+            self._row["cancer_type"] = "MONDO:0021040"
+            
         disorders = ncg2mondo[self._row["cancer_type"]]
-        print(disorders)
-        print(self._row["cancer_type"])
 
         gawds = [
             GeneAssociatedWithDisorder(
@@ -95,6 +95,4 @@ class NCGParser:
 def parse_gene_disease_associations():
     fname = get_file_location("annotation")
     mapping_fname = get_file_location("mapping")
-    print(fname)
-    print(mapping_fname)
     NCGParser(fname, mapping_fname).parse()
