@@ -4,8 +4,8 @@ from configparser import ConfigParser
 
 
 # Holen Sie sich die MongoDB-Konfiguration für die Entwicklungsdatenbank
-mongo_port = 27019
-mongo_db_name = "licensed_nedrex_dev"
+mongo_port = 27020
+mongo_db_name = "licensed_nedrex_live"
 
 # Verbinde dich mit der MongoDB-Datenbank
 client = pymongo.MongoClient('localhost', mongo_port)
