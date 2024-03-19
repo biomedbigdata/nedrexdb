@@ -91,8 +91,8 @@ class NCGParser:
 
 
 def parse_gene_disease_associations():
-    fname = "/nfs/data3/nedrex_data/downloads/ncg/NCG_cancerdrivers_systemslevelproperties.tsv" #get_file_location("annotation")
-    mapping_fname =  "/nfs/data3/nedrex_data/downloads/ncg/ncg2mondo.json" #get_file_location("mapping")
+    fname = _Path("/nfs/data3/nedrex_data/downloads/ncg/NCG_cancerdrivers_systemslevelproperties.tsv") #get_file_location("annotation")
+    mapping_fname =  _Path("/nfs/data3/nedrex_data/downloads/ncg/ncg2mondo.json") #get_file_location("mapping")
     NCGParser(fname, mapping_fname).parse()
 
 parse_gene_disease_associations()
