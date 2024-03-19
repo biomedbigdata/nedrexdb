@@ -1,19 +1,12 @@
 import pymongo
-from configparser import ConfigParser
 
+# Verbindung zur MongoDB-Datenbank herstellen
+client = pymongo.MongoClient('localhost', 27020)
+db = client['licensed_nedrex_live']  # Datenbank auswählen
 
+# Ein zufälliges Element aus der Sammlung abrufen
+random_document = db['gene_associated_with_disorder'].find_one()
 
-# Holen Sie sich die MongoDB-Konfiguration für die Entwicklungsdatenbank
-mongo_port = 27020
-mongo_db_name = "licensed_nedrex_live"
-
-# Verbinde dich mit der MongoDB-Datenbank
-client = pymongo.MongoClient('localhost', mongo_port)
-db = client[mongo_db_name]
-
-# Beispielabfrage
-collections = db.list_collection_names()
-
-# Ausgabe der Collections
-for collection in collections:
-    print(collection)
+# Ergebnis ausgeben
+print(random_document)
+print(random_document)
