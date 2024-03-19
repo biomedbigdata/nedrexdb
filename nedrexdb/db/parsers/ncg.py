@@ -40,6 +40,7 @@ class NCGRow:
         print(ncg2mondo)
         disorders = ncg2mondo[self._row["cancer_type"]]
         print(disorders)
+        print(self._row["cancer_type"])
 
         gawds = [
             GeneAssociatedWithDisorder(
