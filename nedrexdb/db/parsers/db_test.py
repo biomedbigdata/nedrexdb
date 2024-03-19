@@ -12,7 +12,8 @@ client = pymongo.MongoClient('localhost', mongo_port)
 db = client[mongo_db_name]
 
 # Beispielabfrage
-collection = db['GeneAssociatedWithDisorder']
-num_documents = collection.count_documents({})
+collections = db.list_collection_names()
 
-print("Anzahl der Dokumente:", num_documents)
+# Ausgabe der Collections
+for collection in collections:
+    print(collection)
