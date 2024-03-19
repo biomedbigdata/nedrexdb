@@ -102,15 +102,15 @@ def update(conf, download):
     iid.parse_ppis()
     intact.parse()
 
-    cosmic.parse_gene_disease_associations()
-    intogen.parse_gene_disease_associations()
-    ncg.parse_gene_disease_associations()
-
     if version == "licensed":
         omim.parse_gene_disease_associations()
 
     sider.parse()
     uniprot.parse_idmap()
+    
+    cosmic.parse_gene_disease_associations()
+    intogen.parse_gene_disease_associations()
+    ncg.parse_gene_disease_associations()
 
     from nedrexdb.analyses import molecule_similarity
 
