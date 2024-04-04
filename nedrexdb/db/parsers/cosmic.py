@@ -205,16 +205,13 @@ class COSMICParser:
                 if genomic_variant:
                     genomic_variant_updates.append(
                         genomic_variant.generate_update())
-                    print("Variant affects gene: ", variant_gene, "\n")
                     variant_gene_updates.append(variant_gene.generate_update())
                     if variant_disorder:
-                        print("Variant associated with disorder: ", variant_disorder, "\n")
                         variant_disorder_updates.append(
                             variant_disorder.generate_update())
                         gene_disorder = variant_gene.copy()
                         gene_disorder.sourceDomainId = variant_gene.targetDomainId
                         gene_disorder.targetDomainId = variant_disorder.targetDomainId
-                        print("Gene associated with disorder: ", gene_disorder, "\n")
                         gene_disorder_updates.append(gene_disorder.generate_update())
 
             for this_collection_name, these_updates in zip([GenomicVariant.collection_name, VariantAffectsGene.collection_name, VariantAssociatedWithDisorder.collection_name, GeneAssociatedWithDisorder.collection_name],
