@@ -74,6 +74,7 @@ def update(conf, download):
     uberon.parse()
     uniprot.parse_proteins()
     
+    cosmic.parse_gene_disease_associations()
     ncg.parse_gene_disease_associations()
 
     # Sources that add node type but require existing nodes, too
@@ -110,7 +111,6 @@ def update(conf, download):
     sider.parse()
     uniprot.parse_idmap()
     
-    cosmic.parse_gene_disease_associations()
     intogen.parse_gene_disease_associations()
     
 

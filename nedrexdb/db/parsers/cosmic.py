@@ -221,4 +221,6 @@ def parse_gene_disease_associations():
     logger.info("Parsing COSMIC")
     fname = get_file_location("census")
     mapping_fname = get_file_location("mapping")
+    print(fname, mapping_fname)
+    print(fname[0])
     COSMICParser(fname).parse(mapping_fname)
