@@ -8,6 +8,7 @@ from tqdm import tqdm as _tqdm
 from nedrexdb.db import MongoInstance
 from nedrexdb.db.models.edges.variant_affects_gene import VariantAffectsGene
 from nedrexdb.db.models.edges.variant_associated_with_disorder import VariantAssociatedWithDisorder
+from nedrexdb.db.models.edges.gene_associated_with_disorder import GeneAssociatedWithDisorder
 from nedrexdb.db.models.nodes.gene import Gene
 from nedrexdb.db.models.nodes.genomic_variant import GenomicVariant
 from nedrexdb.db.parsers import _get_file_location_factory
@@ -199,8 +200,7 @@ class COSMICParser:
         for chunk in _tqdm(_chunked(updates, 10_000), leave=False, desc="Parsing COSMIC"):
             if not chunk:
                 continue
-            print(chunk)
-            genomic_variant_updates, variant_gene_updates, variant_disorder_updates = [], [], []
+            genomic_variant_updates, variant_gene_updates, variant_disorder_updates, gene_disorder_updates = [], [], [], []
             for genomic_variant, variant_gene, variant_disorder in chunk:
                 if genomic_variant:
                     genomic_variant_updates.append(
@@ -211,6 +211,9 @@ class COSMICParser:
                         print("Variant associated with disorder: ", variant_disorder, "\n")
                         variant_disorder_updates.append(
                             variant_disorder.generate_update())
+                        gene_disorder = variant_disorder
+                        gene_disorder.sourceDomainId = variant_gene.targetDomainId
+                        print("Gene associated with disorder: ", gene_disorder, "\n")
 
             for this_collection_name, these_updates in zip([GenomicVariant.collection_name, VariantAffectsGene.collection_name, VariantAssociatedWithDisorder.collection_name],
                                                            [genomic_variant_updates, variant_gene_updates, variant_disorder_updates]):
