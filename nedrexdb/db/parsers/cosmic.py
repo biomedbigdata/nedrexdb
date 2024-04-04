@@ -211,12 +211,14 @@ class COSMICParser:
                         print("Variant associated with disorder: ", variant_disorder, "\n")
                         variant_disorder_updates.append(
                             variant_disorder.generate_update())
-                        gene_disorder = variant_disorder
+                        gene_disorder = variant_gene.copy()
                         gene_disorder.sourceDomainId = variant_gene.targetDomainId
+                        gene_disorder.targetDomainId = variant_disorder.targetDomainId
                         print("Gene associated with disorder: ", gene_disorder, "\n")
+                        gene_disorder_updates.append(gene_disorder.generate_update())
 
-            for this_collection_name, these_updates in zip([GenomicVariant.collection_name, VariantAffectsGene.collection_name, VariantAssociatedWithDisorder.collection_name],
-                                                           [genomic_variant_updates, variant_gene_updates, variant_disorder_updates]):
+            for this_collection_name, these_updates in zip([GenomicVariant.collection_name, VariantAffectsGene.collection_name, VariantAssociatedWithDisorder.collection_name, GeneAssociatedWithDisorder.collection_name],
+                                                           [genomic_variant_updates, variant_gene_updates, variant_disorder_updates, gene_disorder_updates]):
                 bulk_write_results = MongoInstance.DB[this_collection_name].bulk_write(
                     these_updates)
                 if bulk_write_results.bulk_api_result['writeErrors'] or bulk_write_results.bulk_api_result['writeConcernErrors']:
