@@ -199,6 +199,7 @@ class COSMICParser:
         for chunk in _tqdm(_chunked(updates, 10_000), leave=False, desc="Parsing COSMIC"):
             if not chunk:
                 continue
+            print(chunk)
             genomic_variant_updates, variant_gene_updates, variant_disorder_updates = [], [], []
             for genomic_variant, variant_gene, variant_disorder in chunk:
                 if genomic_variant:
