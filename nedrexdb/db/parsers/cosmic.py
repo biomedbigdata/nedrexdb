@@ -204,8 +204,10 @@ class COSMICParser:
                 if genomic_variant:
                     genomic_variant_updates.append(
                         genomic_variant.generate_update())
+                    print("Variant affects gene: ", variant_gene, "\n")
                     variant_gene_updates.append(variant_gene.generate_update())
                     if variant_disorder:
+                        print("Variant associated with disorder: ", variant_disorder, "\n")
                         variant_disorder_updates.append(
                             variant_disorder.generate_update())
 
@@ -215,9 +217,7 @@ class COSMICParser:
                     these_updates)
                 if bulk_write_results.bulk_api_result['writeErrors'] or bulk_write_results.bulk_api_result['writeConcernErrors']:
                     print(bulk_write_results.bulk_api_result)
-            
-            print(variant_gene_updates)
-        
+                    
 
 
 def parse_gene_disease_associations():
