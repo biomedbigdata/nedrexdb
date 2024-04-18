@@ -4,7 +4,7 @@ import xml.etree.cElementTree as _et
 import openpyxl as _openpyxl
 import zipfile as _zipfile
 
-
+from nedrexdb.db import MongoInstance
 from nedrexdb.logger import logger
 from nedrexdb.db.models.nodes.disorder import Disorder
 from nedrexdb.db.models.nodes.gene import Gene
@@ -25,7 +25,7 @@ class OrphanetParser:
     def get_dict_icd10_mondo(self):
         # get the mapping ICD10 to MONDO from the existing disorders
         icd10_mondo = _defaultdict(list)
-        for item in Disorder.objects():
+        for item in Gene.find(MongoInstance.DB):
             for icd10_ids in [i for i in item.icd10]:
                 for icd10_id in icd10_ids:
                     icd10_mondo[icd10_id].append(item.primaryDomainId)
@@ -97,6 +97,7 @@ class OrphanetParser:
         logger.info("\tParsing disorder-gene associations from OrphaNet")
 
         orpha_icd10 = self.get_dict_OrphaCode_icd10()
+        print(orpha_icd10)
         icd10_mondo = self.get_dict_icd10_mondo()
 
         ordered_OrphaCode = self.get_OrphaCode()
