@@ -13,20 +13,14 @@ from nedrexdb.db.models.edges.gene_associated_with_disorder import (
 )
 from nedrexdb.db.parsers import _get_file_location_factory
 
-orphanet_path = "https://github.com/Orphanet/Orphadata_aggregated/blob/master/Genes%20associated%20with%20rare%20diseases/en_product6.xml"
-nomenclature_pack = "https://github.com/Orphanet/Orphadata_aggregated/blob/fcb68b2c4b26ace67cc068a2569015c5b156e291/Rare%20diseases%20and%20classifications/Orphanet%20nomenclature%20files%20for%20coding/Orphanet_Nomenclature_Pack_EN.zip"
-
 get_file_location = _get_file_location_factory("orphanet")
 
 class OrphanetParser:
     def __init__(self, orphanet_path, nomenclature_pack):
         # file for disorder-genes associations
         self.associations_path = _Path(orphanet_path)
-        print(self.associations_path)
         # file for Orphacode-icd10 mapping
         self.nomenclature_path = _Path(nomenclature_pack)
-        print(self.nomenclature_path)
-
 
     def get_dict_icd10_mondo(self):
         # get the mapping ICD10 to MONDO from the existing disorders
@@ -40,30 +34,20 @@ class OrphanetParser:
 
 
     def get_dict_OrphaCode_icd10(self):
-        target_file_name = "ORPHAnomenclature_MasterFile_*"
-        try:
-            with _zipfile.ZipFile(self.nomenclature_path, 'r') as zip_ref:
-                # Check if the target file is present in the zip archive
-                if target_file_name not in zip_ref.namelist():
-                    print(f"The file '{target_file_name}' was not found in the zip archive.")
-                # Read the content of the specified file
-                with zip_ref.open(target_file_name, 'r') as file:
-                    orpha_icd10 = _defaultdict(list)
-                    workbook = _openpyxl.load_workbook(file)
-                    sheet = workbook.active
-                    # Get header names
-                    headers = [cell.value for cell in sheet[1]]
-                    for row in sheet.iter_rows(min_row=2, values_only=True):
-                        # Assuming the column names are 'orpha' and 'ids'
-                        row_data = dict(zip(headers, row))
-                        # Splitting multiple Orpha codes
-                        orpha = row_data['ORPHAcode']
-                        icd10 = row_data['ICDcodes']
-                        if icd10 != None:
-                            orpha_icd10[orpha].append(icd10)
-
-        except _zipfile.BadZipFile:
-            print(f"The file '{self.nomenclature_path}' is not a valid zip file.")
+        with open(self.nomenclature_path, 'r') as file:
+            orpha_icd10 = _defaultdict(list)
+            workbook = _openpyxl.load_workbook(file)
+            sheet = workbook.active
+            # Get header names
+            headers = [cell.value for cell in sheet[1]]
+            for row in sheet.iter_rows(min_row=2, values_only=True):
+                # Assuming the column names are 'orpha' and 'ids'
+                row_data = dict(zip(headers, row))
+                # Splitting multiple Orpha codes
+                orpha = row_data['ORPHAcode']
+                icd10 = row_data['ICDcodes']
+                if icd10 != None:
+                    orpha_icd10[orpha].append(icd10)
 
         return orpha_icd10
 
