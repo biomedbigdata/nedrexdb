@@ -11,20 +11,21 @@ from nedrexdb.db.models.nodes.gene import Gene
 from nedrexdb.db.models.edges.gene_associated_with_disorder import (
     GeneAssociatedWithDisorder,
 )
+from nedrexdb.db.parsers import _get_file_location_factory
 
 orphanet_path = "https://github.com/Orphanet/Orphadata_aggregated/blob/master/Genes%20associated%20with%20rare%20diseases/en_product6.xml"
 nomenclature_pack = "https://github.com/Orphanet/Orphadata_aggregated/blob/fcb68b2c4b26ace67cc068a2569015c5b156e291/Rare%20diseases%20and%20classifications/Orphanet%20nomenclature%20files%20for%20coding/Orphanet_Nomenclature_Pack_EN.zip"
+
+get_file_location = _get_file_location_factory("orphanet")
 
 class OrphanetParser:
     def __init__(self, orphanet_path, nomenclature_pack):
         # file for disorder-genes associations
         self.associations_path = _Path(orphanet_path)
-        if not self.associations_path.exists():
-            raise Exception(f"{self.associations_path} does not exist")
+        print(self.associations_path)
         # file for Orphacode-icd10 mapping
         self.nomenclature_path = _Path(nomenclature_pack)
-        if not self.nomenclature_path.exists():
-            raise Exception(f"{self.nomenclature_path} does not exist")
+        print(self.nomenclature_path)
 
 
     def get_dict_icd10_mondo(self):
@@ -149,4 +150,6 @@ class OrphanetParser:
                         )
                     
 def parse_gene_disease_associations():
-    OrphanetParser(orphanet_path, nomenclature_pack).parse()
+    fname = get_file_location("data")
+    mapping_fname = get_file_location("mapping")
+    OrphanetParser(fname, mapping_fname).parse()
