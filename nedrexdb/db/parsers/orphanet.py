@@ -131,8 +131,9 @@ class OrphanetParser:
                     )
                     gawd.save()
                 else:
+                    print("Already exists", gawd)
                     # Check that there is only one result.
-                    assert len(gawd) == 1
+                    assert gawd.count_documents() == 1
                     gawd = gawd[0]
                     # Update
                     gawd.modify(
