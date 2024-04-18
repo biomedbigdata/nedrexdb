@@ -94,23 +94,26 @@ class OrphanetParser:
         logger.info("Parsing OrphaNet")
         logger.info("\tParsing disorder-gene associations from OrphaNet")
 
-        orpha_icd10 = self.get_dict_OrphaCode_icd10()
+        orpha_icd10 = self.get_dict_OrphaCode_icd10() # id: number as string (orpha id?), value: list of icd10 codes
         print(orpha_icd10, "\n\n")
-        icd10_mondo = self.get_dict_icd10_mondo()
+        icd10_mondo = self.get_dict_icd10_mondo() # id: icd10 code, value: list of mondo ids
         print(icd10_mondo, "\n")
 
         # have the same length
-        ordered_OrphaCode = self.get_OrphaCode() # array with numbers as strings
-        ordered_associatedGenes = self.get_genes() # array with arrays of genes
+        ordered_OrphaCode = self.get_OrphaCode() # array with numbers as strings (orpha ids)
+        ordered_associatedGenes = self.get_genes() # array with arrays of genes -> order matching to orpha ids they are associated with?
 
         dict_disorder_genes = {}
+        
+        # go throuh all ordered Orpha codes (same order: associated genes)
         for i in range(len(ordered_OrphaCode)):
-            icd10 = orpha_icd10[ordered_OrphaCode[i]][0]
+            current_OrphaCode = ordered_OrphaCode[i]
+            icd10_codes = orpha_icd10[current_OrphaCode] # an array of icd10 codes
             print(icd10, "\n")
-            mondo = icd10_mondo[icd10]
-            print(mondo, "\n")
-            for disorder in mondo:
-                dict_disorder_genes[disorder] = ordered_associatedGenes[i]
+            for icd10 in icd10_codes:
+                mondo_ids = icd10_mondo[icd10] # an array of mondo ids
+                for disorder in mondo_ids:
+                    dict_disorder_genes[disorder] = ordered_associatedGenes[i] # key: disorder id, value: array of genes that are associated with this disorder
 
         for d, gs in dict_disorder_genes.items():
             for g in gs:
