@@ -27,9 +27,9 @@ class OrphanetParser:
         icd10_mondo = _defaultdict(list)
         for item in Disorder.find(MongoInstance.DB):
             print(item)
-            for icd10_ids in [i for i in item.icd10]:
-                for icd10_id in icd10_ids:
-                    icd10_mondo[icd10_id].append(item.primaryDomainId)
+            for id in item["icd10"]:
+                print(id)
+                icd10_mondo[id].append(item.primaryDomainId)
 
         return icd10_mondo
 
