@@ -95,14 +95,15 @@ class OrphanetParser:
         logger.info("\tParsing disorder-gene associations from OrphaNet")
 
         orpha_icd10 = self.get_dict_OrphaCode_icd10()
+        print(orpha_icd10, "\n\n")
         icd10_mondo = self.get_dict_icd10_mondo()
+        print(icd10_mondo, "\n")
 
-        ordered_OrphaCode = self.get_OrphaCode()
-        ordered_associatedGenes = self.get_genes()
+        # have the same length
+        ordered_OrphaCode = self.get_OrphaCode() # array with numbers as strings
+        ordered_associatedGenes = self.get_genes() # array with arrays of genes
 
         dict_disorder_genes = {}
-        print(len(ordered_OrphaCode))
-        print(len(ordered_associatedGenes))
         for i in range(len(ordered_OrphaCode)):
             icd10 = orpha_icd10[ordered_OrphaCode[i]][0]
             print(icd10, "\n")
