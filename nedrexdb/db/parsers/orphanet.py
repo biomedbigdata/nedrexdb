@@ -117,8 +117,10 @@ class OrphanetParser:
             for g in gs:
                 # Query to see if a relationship is already recorded.
                 gawd = GeneAssociatedWithDisorder.find(MongoInstance.DB, 
-                    sourceDomainId = g,
-                    targetDomainId = d
+                   {
+                    "sourceDomainId": g,
+                    "targetDomainId": d
+                    }
                 )
                 if not gawd:
                     # Create it.
