@@ -25,7 +25,8 @@ class OrphanetParser:
     def get_dict_icd10_mondo(self):
         # get the mapping ICD10 to MONDO from the existing disorders
         icd10_mondo = _defaultdict(list)
-        for item in Gene.find(MongoInstance.DB):
+        for item in Disorder.find(MongoInstance.DB):
+            print(item)
             for icd10_ids in [i for i in item.icd10]:
                 for icd10_id in icd10_ids:
                     icd10_mondo[icd10_id].append(item.primaryDomainId)
