@@ -35,6 +35,7 @@ class OrphanetParser:
 
     def get_dict_OrphaCode_icd10(self):
         with open(self.nomenclature_path, 'r') as file:
+            print(file)
             orpha_icd10 = _defaultdict(list)
             workbook = _openpyxl.load_workbook(file)
             sheet = workbook.active
