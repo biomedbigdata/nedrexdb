@@ -133,8 +133,8 @@ class OrphanetParser:
                 else:
                     print("Already exists", gawd)
                     # Check that there is only one result.
-                    assert gawd.count_documents() == 1
-                    gawd = gawd[0]
+                    assert gawd.count() == 1
+                    gawd = list(gawd)[0]
                     # Update
                     gawd.modify(
                         add_to_set__assertedBy = "orphanet"
