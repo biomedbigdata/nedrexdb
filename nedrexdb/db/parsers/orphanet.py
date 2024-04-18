@@ -112,7 +112,7 @@ class OrphanetParser:
         for d, gs in dict_disorder_genes.items():
             for g in gs:
                 # Query to see if a relationship is already recorded.
-                gawd = GeneAssociatedWithDisorder.objects(
+                gawd = GeneAssociatedWithDisorder.find(
                     sourceDomainId = g,
                     targetDomainId = d
                 )
