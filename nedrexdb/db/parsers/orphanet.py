@@ -12,7 +12,7 @@ from nedrexdb.db.models.edges.gene_associated_with_disorder import (
     GeneAssociatedWithDisorder,
 )
 
-orphanet_path = "https://github.com/Orphanet/Orphadata_aggregated/blob/master/Genes%20associated%20with%20rare%20diseases/en_product*.xml"
+orphanet_path = "https://github.com/Orphanet/Orphadata_aggregated/blob/master/Genes%20associated%20with%20rare%20diseases/en_product6.xml"
 nomenclature_pack = "https://github.com/Orphanet/Orphadata_aggregated/blob/fcb68b2c4b26ace67cc068a2569015c5b156e291/Rare%20diseases%20and%20classifications/Orphanet%20nomenclature%20files%20for%20coding/Orphanet_Nomenclature_Pack_EN.zip"
 
 class OrphanetParser:
