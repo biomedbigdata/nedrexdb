@@ -26,9 +26,7 @@ class OrphanetParser:
         # get the mapping ICD10 to MONDO from the existing disorders
         icd10_mondo = _defaultdict(list)
         for item in Disorder.find(MongoInstance.DB):
-            print(item)
             for id in item["icd10"]:
-                print(id)
                 icd10_mondo[id].append(item["primaryDomainId"])
 
         return icd10_mondo
@@ -103,10 +101,13 @@ class OrphanetParser:
         ordered_associatedGenes = self.get_genes()
 
         dict_disorder_genes = {}
+        print(ordered_OrphaCode)
+        print(ordered_associatedGenes)
         for i in range(len(ordered_OrphaCode)):
             icd10 = orpha_icd10[ordered_OrphaCode[i]][0]
             print(icd10, "\n")
             mondo = icd10_mondo[icd10]
+            print(mondo, "\n")
             dict_disorder_genes[mondo] = ordered_associatedGenes[i]
 
         for d, gs in dict_disorder_genes.items():
