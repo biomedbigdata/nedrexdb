@@ -29,14 +29,13 @@ class OrphanetParser:
             print(item)
             for id in item["icd10"]:
                 print(id)
-                icd10_mondo[id].append(item.primaryDomainId)
+                icd10_mondo[id].append(item["primaryDomainId"])
 
         return icd10_mondo
 
     def get_dict_OrphaCode_icd10(self):
         orpha_icd10 = _defaultdict(list)
         workbook = _openpyxl.load_workbook(filename=self.nomenclature_path, read_only=True)
-        print(workbook.sheetnames)
         sheet = workbook.active
         # Get header names
         headers = [cell.value for cell in sheet[1]]
@@ -98,8 +97,9 @@ class OrphanetParser:
         logger.info("\tParsing disorder-gene associations from OrphaNet")
 
         orpha_icd10 = self.get_dict_OrphaCode_icd10()
-        print(orpha_icd10)
+        print(orpha_icd10, "\n")
         icd10_mondo = self.get_dict_icd10_mondo()
+        print(icd10_mondo, "\n")
 
         ordered_OrphaCode = self.get_OrphaCode()
         ordered_associatedGenes = self.get_genes()
