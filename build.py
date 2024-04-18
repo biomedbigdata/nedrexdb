@@ -34,7 +34,8 @@ from nedrexdb.db.parsers import (
     repotrial,
     cosmic,
     ncg,
-    intogen
+    intogen,
+    orphanet
 )
 from nedrexdb.post_integration import trim_uberon, drop_empty_collections
 
@@ -76,6 +77,7 @@ def update(conf, download):
     
     cosmic.parse_gene_disease_associations()
     ncg.parse_gene_disease_associations()
+    orphanet.parse_gene_disease_associations()
 
     # Sources that add node type but require existing nodes, too
     clinvar.parse()
