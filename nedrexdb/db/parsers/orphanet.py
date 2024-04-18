@@ -32,23 +32,21 @@ class OrphanetParser:
 
         return icd10_mondo
 
-
     def get_dict_OrphaCode_icd10(self):
-        with open(self.nomenclature_path, 'r') as file:
-            print(file)
-            orpha_icd10 = _defaultdict(list)
-            workbook = _openpyxl.load_workbook(file)
-            sheet = workbook.active
-            # Get header names
-            headers = [cell.value for cell in sheet[1]]
-            for row in sheet.iter_rows(min_row=2, values_only=True):
-                # Assuming the column names are 'orpha' and 'ids'
-                row_data = dict(zip(headers, row))
-                # Splitting multiple Orpha codes
-                orpha = row_data['ORPHAcode']
-                icd10 = row_data['ICDcodes']
-                if icd10 != None:
-                    orpha_icd10[orpha].append(icd10)
+        orpha_icd10 = _defaultdict(list)
+        workbook = _openpyxl.load_workbook(filename=self.nomenclature_path, read_only=True)
+        print(workbook.sheetnames)
+        sheet = workbook.active
+        # Get header names
+        headers = [cell.value for cell in sheet[1]]
+        for row in sheet.iter_rows(min_row=2, values_only=True):
+            # Assuming the column names are 'orpha' and 'ids'
+            row_data = dict(zip(headers, row))
+            # Splitting multiple Orpha codes
+            orpha = row_data['ORPHAcode']
+            icd10 = row_data['ICDcodes']
+            if icd10 != None:
+                orpha_icd10[orpha].append(icd10)
 
         return orpha_icd10
 
