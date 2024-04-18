@@ -107,7 +107,6 @@ class OrphanetParser:
         for i in range(len(ordered_OrphaCode)):
             current_OrphaCode = ordered_OrphaCode[i]
             icd10_codes = orpha_icd10[current_OrphaCode] # an array of icd10 codes
-            print(icd10, "\n")
             for icd10 in icd10_codes:
                 mondo_ids = icd10_mondo[icd10] # an array of mondo ids
                 for disorder in mondo_ids:
