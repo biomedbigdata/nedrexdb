@@ -101,14 +101,15 @@ class OrphanetParser:
         ordered_associatedGenes = self.get_genes()
 
         dict_disorder_genes = {}
-        print(ordered_OrphaCode)
-        print(ordered_associatedGenes)
+        print(len(ordered_OrphaCode))
+        print(len(ordered_associatedGenes))
         for i in range(len(ordered_OrphaCode)):
             icd10 = orpha_icd10[ordered_OrphaCode[i]][0]
             print(icd10, "\n")
             mondo = icd10_mondo[icd10]
             print(mondo, "\n")
-            dict_disorder_genes[mondo] = ordered_associatedGenes[i]
+            for disorder in mondo:
+                dict_disorder_genes[disorder] = ordered_associatedGenes[i]
 
         for d, gs in dict_disorder_genes.items():
             for g in gs:
