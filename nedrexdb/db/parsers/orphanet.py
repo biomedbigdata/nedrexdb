@@ -95,9 +95,7 @@ class OrphanetParser:
         logger.info("\tParsing disorder-gene associations from OrphaNet")
 
         orpha_icd10 = self.get_dict_OrphaCode_icd10() # id: number as string (orpha id?), value: list of icd10 codes
-        print(orpha_icd10, "\n\n")
         icd10_mondo = self.get_dict_icd10_mondo() # id: icd10 code, value: list of mondo ids
-        print(icd10_mondo, "\n")
 
         # have the same length
         ordered_OrphaCode = self.get_OrphaCode() # array with numbers as strings (orpha ids)
@@ -116,6 +114,7 @@ class OrphanetParser:
                     dict_disorder_genes[disorder] = ordered_associatedGenes[i] # key: disorder id, value: array of genes that are associated with this disorder
 
         for d, gs in dict_disorder_genes.items():
+            print(d, gs, "\n")
             for g in gs:
                 # Query to see if a relationship is already recorded.
                 gawd = GeneAssociatedWithDisorder.find(
