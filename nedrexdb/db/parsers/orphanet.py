@@ -115,32 +115,36 @@ class OrphanetParser:
         for d, gs in dict_disorder_genes.items():
             print(d, gs, "\n")
             for g in gs:
-                # Query to see if a relationship is already recorded.
-                gawd = GeneAssociatedWithDisorder.find(MongoInstance.DB, 
-                   {
-                    "sourceDomainId": g,
-                    "targetDomainId": d
-                    }
-                )
-                all_gawd = list(gawd)
-                print(all_gawd)
-                if len(all_gawd) == 0:
-                    # Create it.
-                    gawd = GeneAssociatedWithDisorder(
+                GeneAssociatedWithDisorder(
                         sourceDomainId = g,
                         targetDomainId = d,
-                        assertedBy = ["orphanet"]
-                    )
-                    gawd.save()
-                else:
-                    print("Already exists", all_gawd)
-                    # Check that there is only one result.
+                        dataSources = ["orphanet"]
+                    ).generate_update()
+                # Query to see if a relationship is already recorded.
+                # gawd = GeneAssociatedWithDisorder.find(MongoInstance.DB, 
+                #    {
+                #     "sourceDomainId": g,
+                #     "targetDomainId": d
+                #     }
+                # )
+                # all_gawd = list(gawd)
+                # print(all_gawd)
+                # if len(all_gawd) == 0:
+                #     # Create it.
+                #     gawd = GeneAssociatedWithDisorder(
+                #         sourceDomainId = g,
+                #         targetDomainId = d,
+                #         dataSources = ["orphanet"]
+                #     ).generate_update()
+                # else:
+                #     print("Already exists", all_gawd)
+                #     # Check that there is only one result.
                     
-                    gawd = all_gawd[0]
-                    # Update
-                    gawd.modify(
-                        add_to_set__assertedBy = "orphanet"
-                        )
+                #     gawd = all_gawd[0]
+                #     # Update
+                #     gawd.modify(
+                #         add_to_set__assertedBy = "orphanet"
+                #         )
                     
 def parse_gene_disease_associations():
     fname = get_file_location("data")
