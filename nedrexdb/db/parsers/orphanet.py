@@ -122,7 +122,9 @@ class OrphanetParser:
                     "targetDomainId": d
                     }
                 )
-                if not gawd:
+                all_gawd = list(gawd)
+                print(all_gawd)
+                if len(all_gawd) == 0:
                     # Create it.
                     gawd = GeneAssociatedWithDisorder(
                         sourceDomainId = g,
@@ -131,11 +133,10 @@ class OrphanetParser:
                     )
                     gawd.save()
                 else:
-                    print("Already exists", gawd)
+                    print("Already exists", all_gawd)
                     # Check that there is only one result.
-                    all_res = list(gawd)
-                    print(all_res)
-                    gawd = all_res[0]
+                    
+                    gawd = all_gawd[0]
                     # Update
                     gawd.modify(
                         add_to_set__assertedBy = "orphanet"
