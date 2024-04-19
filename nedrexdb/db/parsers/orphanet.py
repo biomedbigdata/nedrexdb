@@ -102,6 +102,7 @@ class OrphanetParser:
         ordered_associatedGenes = self.get_genes() # array with arrays of genes -> order matching to orpha ids they are associated with?
 
         dict_disorder_genes = {}
+        chunk = []
         
         # go throuh all ordered Orpha codes (same order: associated genes)
         for i in range(len(ordered_OrphaCode)):
@@ -113,38 +114,14 @@ class OrphanetParser:
                     dict_disorder_genes[disorder] = ordered_associatedGenes[i] # key: disorder id, value: array of genes that are associated with this disorder
 
         for d, gs in dict_disorder_genes.items():
-            print(d, gs, "\n")
             for g in gs:
-                GeneAssociatedWithDisorder(
+                chunk.append(GeneAssociatedWithDisorder(
                         sourceDomainId = g,
                         targetDomainId = d,
                         dataSources = ["orphanet"]
-                    ).generate_update()
-                # Query to see if a relationship is already recorded.
-                # gawd = GeneAssociatedWithDisorder.find(MongoInstance.DB, 
-                #    {
-                #     "sourceDomainId": g,
-                #     "targetDomainId": d
-                #     }
-                # )
-                # all_gawd = list(gawd)
-                # print(all_gawd)
-                # if len(all_gawd) == 0:
-                #     # Create it.
-                #     gawd = GeneAssociatedWithDisorder(
-                #         sourceDomainId = g,
-                #         targetDomainId = d,
-                #         dataSources = ["orphanet"]
-                #     ).generate_update()
-                # else:
-                #     print("Already exists", all_gawd)
-                #     # Check that there is only one result.
-                    
-                #     gawd = all_gawd[0]
-                #     # Update
-                #     gawd.modify(
-                #         add_to_set__assertedBy = "orphanet"
-                #         )
+                    ).generate_update())
+        MongoInstance.DB[GeneAssociatedWithDisorder.collection_name].bulk_write(chunk)
+                
                     
 def parse_gene_disease_associations():
     fname = get_file_location("data")
