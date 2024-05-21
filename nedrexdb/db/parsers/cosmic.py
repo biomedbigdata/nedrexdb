@@ -209,10 +209,9 @@ class COSMICParser:
                     if variant_disorder:
                         variant_disorder_updates.append(
                             variant_disorder.generate_update())
-                        gene_disorder = GeneAssociatedWithDisorder(accession=variant_gene.accession, dataSources=variant_gene.dataSources,
+                        gene_disorder = GeneAssociatedWithDisorder(dataSources=["cosmic"],
                                                              sourceDomainId=variant_gene.targetDomainId,
-                                                             targetDomainId=variant_disorder.targetDomainId,
-                                                             reviewStatus=variant_gene.reviewStatus)
+                                                             targetDomainId=variant_disorder.targetDomainId)
                         gene_disorder_updates.append(gene_disorder.generate_update())
 
             for this_collection_name, these_updates in zip([GenomicVariant.collection_name, VariantAffectsGene.collection_name, VariantAssociatedWithDisorder.collection_name, GeneAssociatedWithDisorder.collection_name],
