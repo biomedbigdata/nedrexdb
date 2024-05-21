@@ -32,6 +32,9 @@ from nedrexdb.db.parsers import (
     sider,
     uberon,
     repotrial,
+    cosmic,
+    ncg,
+    intogen
 )
 from nedrexdb.post_integration import trim_uberon, drop_empty_collections
 
@@ -70,6 +73,9 @@ def update(conf, download):
     ncbi.parse_gene_info()
     uberon.parse()
     uniprot.parse_proteins()
+    
+    cosmic.parse_gene_disease_associations()
+    ncg.parse_gene_disease_associations()
 
     # Sources that add node type but require existing nodes, too
     clinvar.parse()
@@ -104,6 +110,9 @@ def update(conf, download):
 
     sider.parse()
     uniprot.parse_idmap()
+    
+    intogen.parse_gene_disease_associations()
+    
 
     from nedrexdb.analyses import molecule_similarity
 

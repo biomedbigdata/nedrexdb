@@ -79,11 +79,21 @@ class UniProtRecord:
         if not gene_name:
             pass
         else:
+            if isinstance(gene_name, list):
+                name = None
+                for i in gene_name:
+                    for k,v in i.items():
+                        if not name:
+                            name = v if isinstance(v, str) else v[0]
+                        if k == "Name":
+                            name = v
+                gene_name = name
             if gene_name.startswith("Name="):
                 gene_name = gene_name.replace("Name=", "").split(";", 1)[0]
                 gene_name = self._CURLY_REGEX.split(gene_name)[0].strip()
 
         return gene_name
+
 
     def get_comments(self) -> str:
         return self._record.annotations.get("comment", "")

@@ -71,3 +71,4 @@ def download_biogrid():
 
     if counter != 1:
         raise _AssumptionError("more than one BioGRID file containing 'Homo_sapiens' was found")
+    
