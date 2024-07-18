@@ -74,9 +74,7 @@ def update(conf, download):
     ncbi.parse_gene_info()
     uberon.parse()
     uniprot.parse_proteins()
-    
-    orphanet.parse_gene_disease_associations()
-    
+
     cosmic.parse_gene_disease_associations()
     ncg.parse_gene_disease_associations()
 
@@ -115,7 +113,7 @@ def update(conf, download):
     uniprot.parse_idmap()
     
     intogen.parse_gene_disease_associations()
-    
+    orphanet.parse_gene_disease_associations()    
 
     from nedrexdb.analyses import molecule_similarity
 
