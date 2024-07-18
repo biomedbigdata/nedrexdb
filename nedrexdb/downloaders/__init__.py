@@ -6,6 +6,7 @@ from nedrexdb import config as _config
 from nedrexdb.common import Downloader
 from nedrexdb.db import MongoInstance
 from nedrexdb.downloaders.biogrid import download_biogrid as _download_biogrid
+from nedrexdb.downloaders.orphanet import download_orphanet as _download_orphanet
 
 
 class Version:
@@ -40,6 +41,7 @@ def download_all(force=False):
 
     metadata["source_databases"]["biogrid"] = {"date": f"{_datetime.datetime.now().date()}", "version": None}
     _download_biogrid()
+    _download_orphanet()
 
     for source in filter(lambda i: i not in exclude_keys, sources):
         metadata["source_databases"][source] = {"date": f"{_datetime.datetime.now().date()}", "version": None}
@@ -48,6 +50,7 @@ def download_all(force=False):
         if source in {
             "biogrid",
             "drugbank",
+            "orphanet",
         }:
             continue
         (download_dir / source).mkdir(exist_ok=True)
